@@ -1,16 +1,35 @@
 package main
 
 import (
+	"fmt"
 	"go-jwt-authentication/controllers"
 	"go-jwt-authentication/database"
 	"go-jwt-authentication/middlewares"
+	"log"
+	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	// load .env file when MODE is not developemnt|staging|sandbox|production
+	if os.Getenv("MODE") != "developemnt" ||
+		os.Getenv("MODE") != "staging" ||
+		os.Getenv("MODE") != "sandbox" ||
+		os.Getenv("MODE") != "production" {
+		err := godotenv.Load(".env")
+		if err != nil {
+			log.Fatal("Error loading .env file", err)
+		}
+	}
+
 	// Iniitalize Database
-	database.Connect("root:root@tcp(localhost:3306)/go_jwt_demo?parseTime=true") // should get value from config env
+	database.Connect(fmt.Sprintf(
+		"root:root@tcp(%s:%s)/go_jwt_demo?parseTime=true",
+		os.Getenv("MYSQL_PROVIDER_HOST"),
+		os.Getenv("MYSQL_PROVIDER_PORT"),
+	))
 	database.Migrate()
 	// Initialize Router
 	router := initRouter()
