@@ -1,0 +1,5 @@
+# build
+go-jwt-authentication
+
+# env files
+.env
