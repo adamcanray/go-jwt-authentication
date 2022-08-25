@@ -14,6 +14,7 @@ import (
 
 func main() {
 	// load .env file when MODE is not development|staging|sandbox|production
+	log.Println("App Mode:", os.Getenv("MODE"))
 	if os.Getenv("MODE") != "development" &&
 		os.Getenv("MODE") != "staging" &&
 		os.Getenv("MODE") != "sandbox" &&
