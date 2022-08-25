@@ -14,9 +14,9 @@ import (
 
 func main() {
 	// load .env file when MODE is not development|staging|sandbox|production
-	if os.Getenv("MODE") != "development" ||
-		os.Getenv("MODE") != "staging" ||
-		os.Getenv("MODE") != "sandbox" ||
+	if os.Getenv("MODE") != "development" &&
+		os.Getenv("MODE") != "staging" &&
+		os.Getenv("MODE") != "sandbox" &&
 		os.Getenv("MODE") != "production" {
 		err := godotenv.Load(".env")
 		if err != nil {
